@@ -18280,6 +18280,14 @@ __webpack_require__.r(__webpack_exports__);
 
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.bootstrap = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+window.$(document).ready(function () {
+  console.log("ready!");
+  window.$("span").click(function () {
+    var url = window.$(this).attr("onclick");
+    console.log(url);
+    window.location.href = url;
+  });
+});
 })();
 
 /******/ })()
