@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsersController;
+//use App\Http\Requests\LoginRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+     return $request->user();
+}); */
+
+/* Route::middleware("guest")->get("/login", function (AuthController $auth){
+    $request = new LoginRequest();
+   // echo "herree";
+   // print_r($request->data());
+    return $auth->login($request);    
+}); */
+
+Route::middleware(["web"])->group(function () {
+    Route::post("/login", [AuthController::class, "login"]);
+    Route::get("/logout", [AuthController::class, "logout"])->middleware(["auth"]);
+
+    Route::get("/dashboard/users/index", [UsersController::class, "index"]);
 });
+
+
+

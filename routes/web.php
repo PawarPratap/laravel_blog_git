@@ -3,6 +3,7 @@
 /* use App\Models\Blogs;
 use App\Models\BlogTags; */
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,36 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware(["auth"])->group(function(){
+   //its not working so dashboard is temparary moved to web middleware
+    /* Route::get("/dashboard", function(){
+        return view("dashboard", [
+            "title" => "Dashboard"
+        ]);
+    }); */
+});
 
 Route::middleware(["web"])->group(function () {
+
+    Route::get("/login", [AuthController::class, "loginView"])->name("login");
+
     Route::get("/", [HomeController::class, "home"]);
+
+    // dahboard should be in auth middleware
+    Route::get("/dashboard", function(){
+        return view("dashboard", [
+            "title" => "Dashboard"
+        ]);
+    });
+
+     // users should be in auth middleware
+     Route::get("/dashboard/users", function(){
+        return view("dashboard.users.main", [
+            "title" => "Users"
+        ]);
+    });
+
+    
     /* Route::get('/', function () {
         //return view('welcome');*/
     
